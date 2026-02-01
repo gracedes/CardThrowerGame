@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://tcc34gjo21sg"]
+[gd_scene load_steps=7 format=3 uid="uid://tcc34gjo21sg"]
 
 [ext_resource type="Script" uid="uid://b5vq3lgr83w5p" path="res://scripts/enemy.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://bpf2twgeweu4g" path="res://assets/icon.svg" id="1_7k104"]
 [ext_resource type="PackedScene" uid="uid://bc6862ehmgnwd" path="res://scenes/projectile.tscn" id="2_qi2p4"]
 [ext_resource type="PackedScene" uid="uid://c65ut4j8wt130" path="res://scenes/hurtbox.tscn" id="4_iifgy"]
+[ext_resource type="Script" uid="uid://d0w5wjhjrfer3" path="res://scenes/health.gd" id="5_c4w8v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyqm"]
 size = Vector2(128, 128)
@@ -28,4 +29,11 @@ autostart = true
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_4gyqm")
 
+[node name="EnemyHealth" type="Node" parent="."]
+script = ExtResource("5_c4w8v")
+max_health = 2.0
+metadata/_custom_type_script = "uid://d0w5wjhjrfer3"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="on_damaged" from="Hurtbox" to="." method="_on_damaged"]
+[connection signal="on_death" from="EnemyHealth" to="." method="_on_death"]

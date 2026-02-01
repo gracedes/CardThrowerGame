@@ -5,10 +5,10 @@ class_name Projectile2D
 @export var speed := 500.0
 @export var direction := Vector2(1.0, 0.0)
 @export var projectile_owner: Node2D
+var damage := DamagePayload.new(-1.0)
 
 
-
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	
 	rotation = direction.angle()

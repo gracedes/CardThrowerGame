@@ -2,13 +2,13 @@ extends CharacterBody2D
 
 
 @onready var timer: Timer = $FireCooldown
+@onready var health: Health = $PlayerHealth
 
 @export var projectile: PackedScene
 @export var speed: float = 500
 var look_angle
 
 var can_shoot := true
-
 
 func _ready() -> void:
 #	called when a node is instantiated
@@ -17,11 +17,11 @@ func _ready() -> void:
 	pass
 	
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 #	Called every process.
 	pass
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	
 #	Grabs motion into a vector
@@ -75,3 +75,18 @@ func _handle_fire():
 
 func _on_fire_cooldown_finish() -> void:
 	can_shoot = true
+
+
+func _on_health_zero() -> void:
+	queue_free()
+
+
+func _on_damaged(payload: DamagePayload) -> void:
+	health.change_health(payload)
+
+func _on_before_changed(requested: DamagePayload) -> void:
+	print(requested.amount)
+	if requested.amount > 0.0:
+		pass
+	if requested.amount >= -1.0:
+		requested.amount = 0

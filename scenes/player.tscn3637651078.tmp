@@ -1,41 +1,39 @@
-[gd_scene format=3 uid="uid://1ggtglgl0kvn"]
+[gd_scene load_steps=7 format=3 uid="uid://1ggtglgl0kvn"]
 
 [ext_resource type="Texture2D" uid="uid://bpf2twgeweu4g" path="res://assets/icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://eutfxpmyyjkv" path="res://scripts/player_controls.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://bc6862ehmgnwd" path="res://scenes/projectile.tscn" id="2_i3pqv"]
 [ext_resource type="PackedScene" uid="uid://c65ut4j8wt130" path="res://scenes/hurtbox.tscn" id="4_hqtel"]
-[ext_resource type="Script" uid="uid://d0w5wjhjrfer3" path="res://scenes/health.gd" id="5_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://5nkp8oan5xsg" path="res://scenes/health.tscn" id="5_qlg0r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(128, 128)
 
-[node name="Player" type="CharacterBody2D" unique_id=1261470852]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_onrkg")
 projectile = ExtResource("2_i3pqv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=790523092]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_onrkg")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=741126649]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_4flbx")
 
-[node name="FireCooldown" type="Timer" parent="." unique_id=1637122278]
+[node name="FireCooldown" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
 
-[node name="Hurtbox" parent="." unique_id=533531178 instance=ExtResource("4_hqtel")]
+[node name="Hurtbox" parent="." instance=ExtResource("4_hqtel")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1627739228]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_onrkg")
 
-[node name="PlayerHealth" type="Node" parent="." unique_id=1481931734]
-script = ExtResource("5_qlg0r")
+[node name="PlayerHealth" parent="." instance=ExtResource("5_qlg0r")]
 max_health = 5.0
-metadata/_custom_type_script = "uid://d0w5wjhjrfer3"
 
 [connection signal="timeout" from="FireCooldown" to="." method="_on_fire_cooldown_finish"]
 [connection signal="on_damaged" from="Hurtbox" to="." method="_on_damaged"]
-[connection signal="on_before_changed" from="PlayerHealth" to="." method="_on_before_changed"]
+[connection signal="on_before_changed" from="PlayerHealth" to="." method="_on_health_before_changed"]
 [connection signal="on_death" from="PlayerHealth" to="." method="_on_health_zero"]
