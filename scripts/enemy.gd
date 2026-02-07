@@ -17,6 +17,7 @@ func _on_timer_timeout() -> void:
 	proj.direction = Vector2(0.0, 1.0)
 	proj.projectile_owner = self
 	proj.damage = DamagePayload.new(attack_damage)
+	proj.lifetime = 1.0
 	get_tree().current_scene.add_child(proj)
 
 

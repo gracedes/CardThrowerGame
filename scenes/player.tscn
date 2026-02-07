@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bc6862ehmgnwd" path="res://scenes/projectile.tscn" id="2_i3pqv"]
 [ext_resource type="PackedScene" uid="uid://c65ut4j8wt130" path="res://scenes/hurtbox.tscn" id="4_hqtel"]
 [ext_resource type="Script" uid="uid://d0w5wjhjrfer3" path="res://scenes/health.gd" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://ddn6ygxu4howd" path="res://scripts/cards/card_hand.gd" id="6_tuyoq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(128, 128)
@@ -34,6 +35,10 @@ shape = SubResource("RectangleShape2D_onrkg")
 script = ExtResource("5_qlg0r")
 max_health = 5.0
 metadata/_custom_type_script = "uid://d0w5wjhjrfer3"
+
+[node name="CardHand" type="Node" parent="." unique_id=335392733]
+script = ExtResource("6_tuyoq")
+metadata/_custom_type_script = "uid://ddn6ygxu4howd"
 
 [connection signal="timeout" from="FireCooldown" to="." method="_on_fire_cooldown_finish"]
 [connection signal="on_damaged" from="Hurtbox" to="." method="_on_damaged"]

@@ -1,22 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbfw3fr4qxq0v"]
+[gd_scene format=3 uid="uid://dbfw3fr4qxq0v"]
 
 [ext_resource type="Script" uid="uid://bg7ybwvlbf2g3" path="res://scripts/world.gd" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://1ggtglgl0kvn" path="res://scenes/player.tscn" id="2_k0juu"]
 [ext_resource type="PackedScene" uid="uid://tcc34gjo21sg" path="res://scenes/enemy.tscn" id="3_71j4m"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" unique_id=1253049931]
 script = ExtResource("1_4wyf3")
 
-[node name="Player" parent="." instance=ExtResource("2_k0juu")]
+[node name="Player" parent="." unique_id=482082894 instance=ExtResource("2_k0juu")]
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=247036457]
 zoom = Vector2(0.5, 0.5)
 process_callback = 0
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
-[node name="Enemy" parent="." instance=ExtResource("3_71j4m")]
+[node name="Enemy" parent="." unique_id=484481590 instance=ExtResource("3_71j4m")]
 position = Vector2(954, -2)
 rotation = -3.0728993
 
