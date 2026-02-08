@@ -1,15 +1,13 @@
 extends CharacterBody2D
 
 
-@onready var timer: Timer = $FireCooldown
 @onready var health: Health = $PlayerHealth
 @onready var hand: CardHand = $CardHand
 
 
-@export var projectile: PackedScene
 @export var speed: float = 500
-
 @export var starting_hand: Array[Card]
+
 var look_angle
 
 var can_shoot := true
@@ -71,28 +69,6 @@ func _physics_process(_delta: float) -> void:
 func _handle_fire():
 	if not hand.is_empty():
 		hand.use_selected_card(CardContext.new(self, look_angle))
-	
-	
-	
-	#can_shoot = false
-	#timer.start()
-	#var proj = projectile.instantiate()
-	#if proj is not Projectile2D:
-		#push_error("Cannot fire non projectile scene")
-		#return
-	#proj = proj as Projectile2D
-	#proj.position = position
-	#proj.direction = Vector2.from_angle(look_angle)
-	#proj.speed = 1000
-	#proj.projectile_owner = self
-	#proj.lifetime = 1.0
-	#get_tree().current_scene.add_child(proj)
-	
-
-
-func _on_fire_cooldown_finish() -> void:
-	can_shoot = true
-
 
 func _on_health_zero() -> void:
 	queue_free()

@@ -30,7 +30,6 @@ size = Vector2(128, 128)
 
 [node name="Player" type="CharacterBody2D" unique_id=1261470852]
 script = ExtResource("1_onrkg")
-projectile = ExtResource("2_i3pqv")
 starting_hand = Array[ExtResource("3_smehm")]([ExtResource("4_ur7pv"), SubResource("Resource_d2wvv")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=790523092]
@@ -39,10 +38,6 @@ shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=741126649]
 texture = ExtResource("1_4flbx")
-
-[node name="FireCooldown" type="Timer" parent="." unique_id=1637122278]
-wait_time = 0.2
-one_shot = true
 
 [node name="Hurtbox" parent="." unique_id=533531178 instance=ExtResource("4_hqtel")]
 
@@ -59,7 +54,6 @@ metadata/_custom_type_script = "uid://d0w5wjhjrfer3"
 script = ExtResource("6_tuyoq")
 metadata/_custom_type_script = "uid://ddn6ygxu4howd"
 
-[connection signal="timeout" from="FireCooldown" to="." method="_on_fire_cooldown_finish"]
 [connection signal="on_damaged" from="Hurtbox" to="." method="_on_damaged"]
 [connection signal="on_before_changed" from="PlayerHealth" to="." method="_on_before_changed"]
 [connection signal="on_death" from="PlayerHealth" to="." method="_on_health_zero"]
