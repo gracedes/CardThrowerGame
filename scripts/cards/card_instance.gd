@@ -6,7 +6,7 @@ signal used(hand: CardHand, context: CardContext)
 signal destroyed(hand: CardHand, context: CardContext)
 
 
-@export var resource: CardResource
+@export var card: Card
 var uses: int
 var hand: CardHand
 
@@ -16,14 +16,14 @@ var _on_cooldown := false
 
 
 func _ready() -> void:
-	assert(resource, "[CardInstance]: resource cannot be null!")
+	assert(card, "[CardInstance]: card cannot be null!")
 	assert(hand, "[CardInstance]: hand cannot be null!")
-	uses = resource.max_uses
-	_cooldown_timer.wait_time = resource.cooldown
+	uses = card.max_uses
+	_cooldown_timer.wait_time = card.cooldown
 	
 func setup(context: CardContext) -> void:
-	if resource.on_added:
-		resource.on_added.run(hand, self, context)
+	if card.on_added:
+		card.on_added.run(hand, self, context)
 	added.emit(hand, context)
 	
 func can_use() -> bool:
@@ -37,14 +37,17 @@ func use(context: CardContext) -> void:
 	_on_cooldown = true
 	_cooldown_timer.start()
 	uses -= 1
-	if resource.on_use:
-		resource.on_use.run(hand, self, context)
+	if card.on_use:
+		card.on_use.run(hand, self, context)
 	used.emit(hand, context)
 	
 	if uses == 0:
+		destroy(context)
+
+func destroy(context: CardContext) -> void:
 #		Destroy etc.
-		if resource.on_destroy:
-			resource.on_destroy.run(hand, self, context)
+		if card.on_destroy:
+			card.on_destroy.run(hand, self, context)
 		destroyed.emit(hand, context)
 #		TODO: may need to be changed
 		queue_free()

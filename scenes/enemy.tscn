@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bpf2twgeweu4g" path="res://assets/icon.svg" id="1_7k104"]
 [ext_resource type="PackedScene" uid="uid://bc6862ehmgnwd" path="res://scenes/projectile.tscn" id="2_qi2p4"]
 [ext_resource type="PackedScene" uid="uid://c65ut4j8wt130" path="res://scenes/hurtbox.tscn" id="4_iifgy"]
-[ext_resource type="Script" uid="uid://d0w5wjhjrfer3" path="res://scenes/health.gd" id="5_c4w8v"]
+[ext_resource type="Script" uid="uid://d0w5wjhjrfer3" path="res://scripts/health.gd" id="5_c4w8v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyqm"]
 size = Vector2(128, 128)

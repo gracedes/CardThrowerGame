@@ -14,6 +14,8 @@ func _on_run(hand: CardHand, instance: CardInstance, context: CardContext) -> vo
 	proj = proj as Projectile2D
 #	This will be added to the scene tree root so we need global position
 	var owner := context.source
+#	Temporary
+	proj.lifetime = 1.0
 	proj.projectile_owner = owner
 	proj.global_position = owner.global_position
 	proj.direction = Vector2.from_angle(context.look_angle)

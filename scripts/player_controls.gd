@@ -3,9 +3,13 @@ extends CharacterBody2D
 
 @onready var timer: Timer = $FireCooldown
 @onready var health: Health = $PlayerHealth
+@onready var hand: CardHand = $CardHand
+
 
 @export var projectile: PackedScene
 @export var speed: float = 500
+
+@export var starting_hand: Array[Card]
 var look_angle
 
 var can_shoot := true
@@ -14,6 +18,9 @@ func _ready() -> void:
 #	called when a node is instantiated
 	look_angle = 0.0
 	InputChecker.control_mode = ControlMode.MouseAndKeyboard
+	for c in starting_hand:
+		var context := CardContext.new(self, look_angle)
+		hand.add_card(c, context)
 	pass
 	
 	
@@ -54,22 +61,32 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("fire") and can_shoot:
 		_handle_fire()
 		
-		
+	if Input.is_action_just_pressed("temp_reload"):
+		var context := CardContext.new(self, look_angle)
+		hand.clear_hand(context)
+		for c in starting_hand:
+			hand.add_card(c, context)
+		print("Reloaded")
 
 func _handle_fire():
-	can_shoot = false
-	timer.start()
-	var proj = projectile.instantiate()
-	if proj is not Projectile2D:
-		push_error("Cannot fire non projectile scene")
-		return
-	proj = proj as Projectile2D
-	proj.position = position
-	proj.direction = Vector2.from_angle(look_angle)
-	proj.speed = 1000
-	proj.projectile_owner = self
-	proj.lifetime = 1.0
-	get_tree().current_scene.add_child(proj)
+	if not hand.is_empty():
+		hand.use_selected_card(CardContext.new(self, look_angle))
+	
+	
+	
+	#can_shoot = false
+	#timer.start()
+	#var proj = projectile.instantiate()
+	#if proj is not Projectile2D:
+		#push_error("Cannot fire non projectile scene")
+		#return
+	#proj = proj as Projectile2D
+	#proj.position = position
+	#proj.direction = Vector2.from_angle(look_angle)
+	#proj.speed = 1000
+	#proj.projectile_owner = self
+	#proj.lifetime = 1.0
+	#get_tree().current_scene.add_child(proj)
 	
 
 

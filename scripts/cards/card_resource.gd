@@ -1,5 +1,5 @@
 extends Resource
-class_name CardResource
+class_name Card
 
 @export var id: String
 # TODO: i18n

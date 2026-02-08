@@ -9,6 +9,7 @@ var cards: Array[CardInstance]:
 			push_warning("Cannot have more than % cards in hand." % [hand_size])
 			return
 		cards = value
+# TODO: account for empty hand
 var selected_card: int:
 	set(value):
 		if value < 0 or value >= hand_size:
@@ -31,13 +32,32 @@ func _notification(what: int) -> void:
 			cards = new_card_list
 
 
-func add_card(resource: CardResource, context: CardContext) -> void:
+func add_card(resource: Card, context: CardContext) -> void:
 	if cards.size() >= hand_size:
 		push_warning("Cannot add more than % cards to hand." % [hand_size])
 		return
 	var instance := _card_instance_prefab.instantiate()
 	instance.hand = self
-	instance.resource = resource
+	instance.card = resource
 	cards.append(instance)
 	add_child(instance)
 	instance.setup(context)
+
+func is_empty() -> bool:
+	return cards.is_empty()
+
+func use_selected_card(context: CardContext) -> void:
+	if cards.is_empty():
+		push_warning("Hand is empty: cannot use selected card!")
+		return
+	
+	var inst := cards[selected_card]
+	if inst.can_use():
+		inst.use(context)
+	else:
+		pass
+		#print("Can't use card rn")
+
+func clear_hand(context: CardContext) -> void:
+	for c in cards:
+		c.destroy(context)
