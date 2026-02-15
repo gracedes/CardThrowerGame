@@ -1,6 +1,7 @@
 extends Node
 class_name Health
 
+
 signal on_before_changed(requested: DamagePayload)
 signal on_health_changed(old_health: float, new_health: float)
 signal on_death()

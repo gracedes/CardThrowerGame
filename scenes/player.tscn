@@ -2,48 +2,32 @@
 
 [ext_resource type="Texture2D" uid="uid://bpf2twgeweu4g" path="res://assets/icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://eutfxpmyyjkv" path="res://scripts/player_controls.gd" id="1_onrkg"]
-[ext_resource type="PackedScene" uid="uid://bc6862ehmgnwd" path="res://scenes/projectile.tscn" id="2_i3pqv"]
 [ext_resource type="Script" uid="uid://b7r6gv2q3o8oq" path="res://scripts/cards/card_resource.gd" id="3_smehm"]
 [ext_resource type="PackedScene" uid="uid://c65ut4j8wt130" path="res://scenes/hurtbox.tscn" id="4_hqtel"]
 [ext_resource type="Resource" uid="uid://obkokaoen8cs" path="res://assets/cards/white_projectile.tres" id="4_ur7pv"]
+[ext_resource type="Resource" uid="uid://cjyykjitx47n" path="res://assets/cards/temp_card.tres" id="4_y4r1p"]
 [ext_resource type="Script" uid="uid://d0w5wjhjrfer3" path="res://scripts/health.gd" id="5_qlg0r"]
-[ext_resource type="Script" uid="uid://isnvsee8jx5h" path="res://scripts/cards/responders/projectile_spawner.gd" id="5_ur7pv"]
 [ext_resource type="Script" uid="uid://ddn6ygxu4howd" path="res://scripts/cards/card_hand.gd" id="6_tuyoq"]
 
-[sub_resource type="Resource" id="Resource_y4r1p"]
-script = ExtResource("5_ur7pv")
-projectile = ExtResource("2_i3pqv")
-speed = 1500.0
-metadata/_custom_type_script = "uid://isnvsee8jx5h"
-
-[sub_resource type="Resource" id="Resource_d2wvv"]
-script = ExtResource("3_smehm")
-id = "other_thing"
-display_name = "Other Thing"
-max_uses = 5
-cooldown = 0.05
-on_use = SubResource("Resource_y4r1p")
-metadata/_custom_type_script = "uid://b7r6gv2q3o8oq"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
 size = Vector2(128, 128)
 
 [node name="Player" type="CharacterBody2D" unique_id=1261470852]
 script = ExtResource("1_onrkg")
-starting_hand = Array[ExtResource("3_smehm")]([ExtResource("4_ur7pv"), SubResource("Resource_d2wvv")])
+starting_hand = Array[ExtResource("3_smehm")]([ExtResource("4_y4r1p"), ExtResource("4_ur7pv"), ExtResource("4_y4r1p")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=790523092]
 position = Vector2(-0.5, 0.5)
-shape = SubResource("RectangleShape2D_onrkg")
+shape = SubResource("RectangleShape2D_smehm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=741126649]
 texture = ExtResource("1_4flbx")
 
 [node name="Hurtbox" parent="." unique_id=533531178 instance=ExtResource("4_hqtel")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1627739228]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1821603433]
 position = Vector2(-0.5, 0.5)
-shape = SubResource("RectangleShape2D_onrkg")
+shape = SubResource("RectangleShape2D_smehm")
 
 [node name="PlayerHealth" type="Node" parent="." unique_id=1481931734]
 script = ExtResource("5_qlg0r")
@@ -53,6 +37,8 @@ metadata/_custom_type_script = "uid://d0w5wjhjrfer3"
 [node name="CardHand" type="Node" parent="." unique_id=335392733]
 script = ExtResource("6_tuyoq")
 metadata/_custom_type_script = "uid://ddn6ygxu4howd"
+
+[node name="Timer" type="Timer" parent="." unique_id=2106896782]
 
 [connection signal="on_damaged" from="Hurtbox" to="." method="_on_damaged"]
 [connection signal="on_before_changed" from="PlayerHealth" to="." method="_on_before_changed"]
